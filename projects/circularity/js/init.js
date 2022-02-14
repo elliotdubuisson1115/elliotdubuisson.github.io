@@ -20,13 +20,38 @@ var init = function (window) {
         ////////////////////////////////////////////////////////////
         
         // TODO 1 : Declare and initialize our variables
-
+        var circle; // undifined variable that will hold an indiviadual circle
+        var circles = []; // emtpy array that will later hold multiple circles
 
         // TODO 2 : Create a function that draws a circle 
-        
+        function drawCircle(){
+            circle = draw.randomCircleInArea(canvas, true, true, '#999', 2); //calls the random circle function, creates a circle
+            physikz.addRandomVelocity(circle, canvas); // adds random velocity
+            view.addChild(circle); // add circle to canvas
+            circles.push(circle); //push method pushes individual circle to circles array
+         }
 
         // TODO 3 / 8 : Call the drawCircle() function 
 
+         //manually, repetitively draw circles each time function was called
+         /*
+
+            drawCircle();
+            drawCircle();
+            drawCircle();
+            drawCircle();
+            drawCircle();
+
+        */
+
+
+
+
+
+       for (var i = 0; i<=100; i++){
+        drawCircle();
+       }
+       
 
         ////////////////////////////////////////////////////////////
         ///////////////// PROGRAM LOGIC ////////////////////////////
@@ -38,17 +63,27 @@ var init = function (window) {
         and check to see if it has drifted off the screen.         
         */
         function update() {
-            // TODO 4 : Update the circle's position //
 
-            
+            // TODO 4 : Update the circle's position //
+           
+           
+        
             // TODO 5 / 10 : Call game.checkCirclePosition() on your circles.
            
+         
+
+
+
 
             // TODO 9 : Iterate over the array
-           
+             for(var i = 0; i < circles.length; i++) { // this code makes it to where the code can run an infinite amount of times.
+                physikz.updatePosition(circles[i]);// the way this loop is set up is to where it runs the loop infinitly instead of having to put your code mulitple times individually.
+                game.checkCirclePosition(circles[i]); // this loop is the same as the one on line 80.
+            }
+
             
-        }
     
+        }
         /* 
         This Function should check the position of a circle that is passed to the 
         Function. If that circle drifts off the screen, this Function should move
@@ -59,11 +94,24 @@ var init = function (window) {
             // if the circle has gone past the RIGHT side of the screen then place it on the LEFT
             if ( circle.x > canvas.width ) {
                 circle.x = 0;
+            } 
+            // if the circle has gone past the left side of the screen then place it on the right
+            if ( circle.x < 0 ) {
+                circle.x - canvas.width;
+            }
+            // if the circle has gone off the bottom of the screen, place it on the top
+            if (circle.y > canvas.height ) {
+                circle.y - 0;
+
+            }
+            //if the circle has gone off the top of the screen, place it on the bottom
+            if (circle.y < 0 ) {
+                circle.y - canvas.heigth;
             }
             
             // TODO 7 : YOUR CODE STARTS HERE //////////////////////
             
-
+ 
 
             // YOUR TODO 7 CODE ENDS HERE //////////////////////////
         }
